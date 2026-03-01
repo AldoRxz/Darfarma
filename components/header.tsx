@@ -16,7 +16,7 @@ export function Header() {
 
     return (
         <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/50">
-            <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+            <div className="mx-auto flex max-w-[1400px] items-center justify-between px-8 lg:px-12 py-4">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
                     <Leaf className="h-7 w-7 text-primary" strokeWidth={2.5} />

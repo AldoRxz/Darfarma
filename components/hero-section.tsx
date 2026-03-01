@@ -60,7 +60,7 @@ export function HeroSection() {
         <section
             id="hero"
             ref={ref}
-            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background"
+            className="relative min-h-screen flex items-center overflow-hidden bg-background"
         >
             {/* Subtle gradient background */}
             <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background" />
@@ -85,16 +85,16 @@ export function HeroSection() {
                 transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
             />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6 pt-12 pb-12">
-                <div className="grid lg:grid-cols-2 gap-8 items-center">
+            <div className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-12 pt-8 pb-8">
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
                     {/* Text Content */}
-                    <motion.div style={{ opacity }} className="space-y-5">
+                    <motion.div style={{ opacity }} className="space-y-6">
                         <motion.div
                             variants={fadeUpVariants}
                             initial="hidden"
                             animate="visible"
                             custom={0}
-                            className="inline-flex items-center gap-2 bg-foreground text-background px-3 py-1.5 rounded-full text-xs font-mono tracking-wider"
+                            className="inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 rounded-full text-xs font-mono tracking-wider"
                         >
                             <motion.span
                                 className="w-2 h-2 bg-primary rounded-full"
@@ -104,10 +104,10 @@ export function HeroSection() {
                             SUPLEMENTOS NATURALES PREMIUM
                         </motion.div>
 
-                        <div className="space-y-1 overflow-hidden">
+                        <div className="space-y-2 overflow-hidden">
                             <motion.h1
                                 style={{ x: textX1 }}
-                                className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-foreground leading-[0.9]"
+                                className="text-6xl md:text-7xl lg:text-[7rem] font-black tracking-tighter text-foreground leading-[0.85]"
                             >
                                 <motion.span
                                     variants={fadeUpVariants}
@@ -121,7 +121,7 @@ export function HeroSection() {
                             </motion.h1>
                             <motion.h1
                                 style={{ x: textX2 }}
-                                className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-foreground leading-[0.9]"
+                                className="text-6xl md:text-7xl lg:text-[7rem] font-black tracking-tighter text-foreground leading-[0.85]"
                             >
                                 <motion.span
                                     variants={fadeUpVariants}
@@ -138,7 +138,7 @@ export function HeroSection() {
                                 initial="hidden"
                                 animate="visible"
                                 custom={3}
-                                className="text-lg md:text-2xl font-mono text-foreground/60 tracking-tight pt-4 max-w-lg"
+                                className="text-lg md:text-xl lg:text-2xl text-foreground/60 tracking-tight pt-4 max-w-lg"
                             >
                                 Sin azúcar. Ingredientes naturales. Energía limpia para sentirte mejor.
                             </motion.p>
@@ -149,10 +149,10 @@ export function HeroSection() {
                             initial="hidden"
                             animate="visible"
                             custom={4}
-                            className="flex flex-wrap gap-3 pt-4"
+                            className="flex flex-wrap gap-4 pt-6"
                         >
                             <motion.button
-                                className="bg-primary text-primary-foreground px-8 py-3.5 rounded-full font-bold text-base tracking-wide flex items-center gap-2 group relative overflow-hidden"
+                                className="bg-primary text-primary-foreground px-10 py-4 rounded-full font-bold text-base tracking-wide flex items-center gap-2 group relative overflow-hidden"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -176,7 +176,7 @@ export function HeroSection() {
                                 </motion.svg>
                             </motion.button>
                             <motion.button
-                                className="border-2 border-foreground text-foreground px-8 py-3.5 rounded-full font-bold text-base tracking-wide relative overflow-hidden"
+                                className="border-2 border-foreground text-foreground px-10 py-4 rounded-full font-bold text-base tracking-wide relative overflow-hidden"
                                 whileHover={{ scale: 1.02, backgroundColor: "var(--foreground)", color: "var(--background)" }}
                                 whileTap={{ scale: 0.98 }}
                                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -190,12 +190,12 @@ export function HeroSection() {
                             initial="hidden"
                             animate="visible"
                             custom={5}
-                            className="flex flex-wrap gap-4 pt-2"
+                            className="flex flex-wrap gap-5 pt-4"
                         >
                             {["100% Natural", "Sin Gluten", "Vegano", "Vitaminas Premium"].map((benefit, i) => (
                                 <motion.div
                                     key={benefit}
-                                    className="flex items-center gap-2 text-xs font-mono text-foreground/60"
+                                    className="flex items-center gap-2 text-sm font-mono text-foreground/60"
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: 0.8 + i * 0.1 }}
@@ -233,8 +233,8 @@ export function HeroSection() {
                                 <Image
                                     src="/images/darfarma-magnesio.png"
                                     alt="Dar Farma - Citrato de Magnesio"
-                                    width={450}
-                                    height={600}
+                                    width={550}
+                                    height={700}
                                     className="relative z-10 drop-shadow-2xl"
                                     priority
                                 />
