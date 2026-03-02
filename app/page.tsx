@@ -4,6 +4,7 @@ import { FeaturedProducts } from "@/components/featured-products"
 import { BentoGrid } from "@/components/bento-grid"
 import { ActivationsSection } from "@/components/activations-section"
 import { SocialSection } from "@/components/social-section"
+import { Footer } from "@/components/footer"
 
 export default function Home() {
     return (
@@ -16,6 +17,7 @@ export default function Home() {
                 <ActivationsSection />
                 <SocialSection />
             </main>
+            <Footer />
         </div>
     )
 }
