@@ -54,14 +54,14 @@ export function Footer() {
             links: [
                 { label: "Inicio", href: "#" },
                 { label: "Productos", href: "#productos" },
-                { label: "Sobre Nosotros", href: "#sobre-nosotros" },
+                { label: "Sobre Nosotros", href: "/sobre-nosotros" },
                 { label: "Contacto", href: "#contacto" },
             ],
         },
         {
             title: "Compañía",
             links: [
-                { label: "Sobre Nosotros", href: "#sobre-nosotros" },
+                { label: "Sobre Nosotros", href: "/sobre-nosotros" },
                 { label: "Blog", href: "#blog" },
                 { label: "Distribuidores", href: "#" },
                 { label: "Contacto", href: "#contacto" },
