@@ -6,6 +6,7 @@ export interface BlogArticle {
     excerpt: string
     category: string
     readTime: string
+    image: string
     content: {
         type: "paragraph" | "heading" | "subheading" | "list"
         text?: string
@@ -23,6 +24,7 @@ export const blogArticles: BlogArticle[] = [
             "Se define como nutracéutico a cualquier alimento o ingrediente de los alimentos que ejerce acción benéfica en la salud del hombre.",
         category: "Nutracéuticos",
         readTime: "6 min",
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&h=600&fit=crop&q=80",
         content: [
             {
                 type: "heading",
@@ -83,6 +85,7 @@ export const blogArticles: BlogArticle[] = [
             "La creatina ofrece una serie de beneficios significativos para las personas mayores de 45 años, contribuyendo a la mejora de la salud general y la calidad de vida.",
         category: "Suplementos",
         readTime: "7 min",
+        image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=500&fit=crop&q=80",
         content: [
             {
                 type: "paragraph",
@@ -147,6 +150,7 @@ export const blogArticles: BlogArticle[] = [
             "La clave para una vida larga y saludable está en nuestros hábitos diarios. Exploramos los hábitos saludables fundamentales para alcanzar una vida plena.",
         category: "Bienestar",
         readTime: "8 min",
+        image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&h=500&fit=crop&q=80",
         content: [
             {
                 type: "paragraph",
@@ -227,6 +231,7 @@ export const blogArticles: BlogArticle[] = [
             "El poder y la potencia son dos cualidades esenciales que desempeñan un papel fundamental en el rendimiento de los atletas en una variedad de disciplinas deportivas.",
         category: "Deporte",
         readTime: "7 min",
+        image: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&h=500&fit=crop&q=80",
         content: [
             {
                 type: "paragraph",
@@ -289,6 +294,7 @@ export const blogArticles: BlogArticle[] = [
             "La energía es el motor que impulsa a los atletas y a los entusiastas del fitness a lograr sus metas y alcanzar su máximo potencial.",
         category: "Deporte",
         readTime: "7 min",
+        image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&h=500&fit=crop&q=80",
         content: [
             {
                 type: "paragraph",
@@ -355,6 +361,7 @@ export const blogArticles: BlogArticle[] = [
             "La creatina se ha consolidado como una herramienta efectiva para maximizar los resultados del entrenamiento y mejorar el rendimiento físico.",
         category: "Suplementos",
         readTime: "8 min",
+        image: "https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=800&h=500&fit=crop&q=80",
         content: [
             {
                 type: "paragraph",
@@ -425,6 +432,7 @@ export const blogArticles: BlogArticle[] = [
             "El levantamiento de pesas es una disciplina que combina fuerza, técnica y determinación para lograr hazañas impresionantes de potencia física.",
         category: "Deporte",
         readTime: "8 min",
+        image: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&h=500&fit=crop&q=80",
         content: [
             {
                 type: "paragraph",
@@ -493,6 +501,7 @@ export const blogArticles: BlogArticle[] = [
             "Exploraremos los conceptos básicos de la suplementación para el ejercicio y proporcionaremos una visión general de los suplementos más comunes en la comunidad fitness.",
         category: "Suplementos",
         readTime: "9 min",
+        image: "https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?w=800&h=500&fit=crop&q=80",
         content: [
             {
                 type: "paragraph",

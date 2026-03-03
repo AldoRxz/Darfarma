@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { BlogArticle } from "@/lib/blog-data"
 import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react"
 
@@ -14,19 +15,37 @@ const categoryColors: Record<string, string> = {
 
 export function BlogArticleSection({ article }: { article: BlogArticle }) {
     return (
-        <section className="relative py-20 md:py-28 bg-[#0e0e0e] overflow-hidden min-h-screen">
+        <section className="relative bg-[#0e0e0e] overflow-hidden min-h-screen">
+            {/* Hero Image */}
+            <motion.div
+                className="relative w-full aspect-[21/9] md:aspect-[3/1] overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+            >
+                <Image
+                    src={article.image}
+                    alt={article.title}
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                    priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0e0e0e]/30 to-transparent" />
+            </motion.div>
+
             {/* Grid bg */}
             <div
-                className="absolute inset-0 opacity-[0.03]"
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{
                     backgroundImage:
                         "linear-gradient(rgba(126,204,92,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(126,204,92,0.3) 1px, transparent 1px)",
                     backgroundSize: "60px 60px",
                 }}
             />
-            <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-primary/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="max-w-[800px] mx-auto px-8 lg:px-12 relative z-10">
+            <div className="max-w-[800px] mx-auto px-8 lg:px-12 relative z-10 -mt-16 md:-mt-24 pb-20">
                 {/* Back link */}
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}

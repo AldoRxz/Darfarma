@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { blogArticles } from "@/lib/blog-data"
 import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react"
 
@@ -106,14 +107,24 @@ export function BlogListingSection() {
                 >
                     <Link href={`/blog/${featuredArticle.slug}`} className="block group">
                         <motion.div
-                            className="relative bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 md:p-10 hover:border-primary/30 transition-all duration-500 overflow-hidden"
+                            className="relative bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500"
                             whileHover={{ y: -4 }}
                             transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         >
-                            {/* Glow on hover */}
-                            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/[0.05] rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                            {/* Featured Image */}
+                            <div className="relative w-full aspect-[21/9] overflow-hidden">
+                                <Image
+                                    src={featuredArticle.image}
+                                    alt={featuredArticle.title}
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                    sizes="(max-width: 768px) 100vw, 1400px"
+                                    priority
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/40 to-transparent" />
+                            </div>
 
-                            <div className="relative z-10">
+                            <div className="relative z-10 p-8 md:p-10 -mt-20">
                                 <div className="flex flex-wrap items-center gap-3 mb-4">
                                     <span className={`font-mono text-[10px] tracking-widest px-3 py-1 rounded-full border ${categoryColors[featuredArticle.category] || "bg-primary/10 text-primary border-primary/20"}`}>
                                         {featuredArticle.category.toUpperCase()}
@@ -162,13 +173,24 @@ export function BlogListingSection() {
                         <motion.div key={article.slug} variants={itemVariants}>
                             <Link href={`/blog/${article.slug}`} className="block group h-full">
                                 <motion.div
-                                    className="h-full bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:border-primary/30 transition-all duration-500 flex flex-col relative overflow-hidden"
+                                    className="h-full bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 flex flex-col relative"
                                     whileHover={{ y: -4 }}
                                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                 >
-                                    <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-primary/[0.04] rounded-full blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                                    {/* Card Image */}
+                                    <div className="relative w-full aspect-[16/9] overflow-hidden">
+                                        <Image
+                                            src={article.image}
+                                            alt={article.title}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                            loading="lazy"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e]/80 via-transparent to-transparent" />
+                                    </div>
 
-                                    <div className="relative z-10 flex flex-col flex-1">
+                                    <div className="relative z-10 p-6 flex flex-col flex-1">
                                         <div className="flex items-center gap-3 mb-4">
                                             <span className={`font-mono text-[10px] tracking-widest px-2.5 py-0.5 rounded-full border ${categoryColors[article.category] || "bg-primary/10 text-primary border-primary/20"}`}>
                                                 {article.category.toUpperCase()}
