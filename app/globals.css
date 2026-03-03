@@ -70,3 +70,15 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* GPU compositing for animated elements */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Skip layout/paint for below-fold sections */
+.content-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}

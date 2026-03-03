@@ -1,9 +1,7 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
 import { FeaturedProducts } from "@/components/featured-products"
-import { BentoGrid } from "@/components/bento-grid"
-import { ActivationsSection } from "@/components/activations-section"
-import { SocialSection } from "@/components/social-section"
+import { LazyHomeSections } from "@/components/lazy-home-sections"
 import { Footer } from "@/components/footer"
 import { ProductJsonLd } from "@/components/json-ld"
 
@@ -60,9 +58,7 @@ export default function Home() {
                 <ProductJsonLd products={products} />
                 <HeroSection />
                 <FeaturedProducts />
-                <BentoGrid />
-                <ActivationsSection />
-                <SocialSection />
+                <LazyHomeSections />
             </main>
             <Footer />
         </div>

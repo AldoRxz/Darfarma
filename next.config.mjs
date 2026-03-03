@@ -3,6 +3,9 @@ const nextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
+    reactStrictMode: true,
+    compress: true,
+    poweredByHeader: false,
     images: {
         remotePatterns: [
             {
@@ -14,6 +17,8 @@ const nextConfig = {
                 hostname: 'www.instagram.com',
             },
         ],
+        formats: ['image/avif', 'image/webp'],
+        minimumCacheTTL: 60 * 60 * 24 * 30,
     },
 }
 
