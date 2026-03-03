@@ -62,7 +62,7 @@ export function Footer() {
             title: "Compañía",
             links: [
                 { label: "Sobre Nosotros", href: "/sobre-nosotros" },
-                { label: "Blog", href: "#blog" },
+                { label: "Blog", href: "/blog" },
                 { label: "Distribuidores", href: "#" },
                 { label: "Contacto", href: "#contacto" },
             ],
