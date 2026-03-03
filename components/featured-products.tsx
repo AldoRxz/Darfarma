@@ -72,7 +72,7 @@ function ProductCard({ name, description, price, image, tag }: Product) {
                 )}
                 <Image
                     src={image}
-                    alt={name}
+                    alt={`Suplemento natural Dar Farma - ${name}`}
                     fill
                     className="object-contain p-4 md:p-8 transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"

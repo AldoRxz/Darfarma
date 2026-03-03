@@ -52,7 +52,7 @@ export function Footer() {
         {
             title: "Enlaces",
             links: [
-                { label: "Inicio", href: "#" },
+                { label: "Inicio", href: "/" },
                 { label: "Productos", href: "#productos" },
                 { label: "Sobre Nosotros", href: "/sobre-nosotros" },
                 { label: "Contacto", href: "/contacto" },
@@ -63,7 +63,7 @@ export function Footer() {
             links: [
                 { label: "Sobre Nosotros", href: "/sobre-nosotros" },
                 { label: "Blog", href: "/blog" },
-                { label: "Distribuidores", href: "#" },
+                { label: "Distribuidores", href: "/contacto" },
                 { label: "Contacto", href: "/contacto" },
             ],
         },
@@ -73,7 +73,7 @@ export function Footer() {
                 { label: "Política de Privacidad", href: "/politica-privacidad" },
                 { label: "Términos de Servicio", href: "/terminos-servicio" },
                 { label: "Política de Reembolso", href: "/politica-rembolso" },
-                { label: "Aviso Legal", href: "#" },
+                { label: "Aviso Legal", href: "/terminos-servicio" },
             ],
         },
     ]
@@ -109,7 +109,7 @@ export function Footer() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="max-w-xl mx-auto mb-12"
                 >
-                    <div className="flex flex-col sm:flex-row gap-3">
+                    <form onSubmit={(e) => { e.preventDefault(); handleSubmit() }} className="flex flex-col sm:flex-row gap-3" aria-label="Suscripción al newsletter">
                         <div className="flex-1 relative">
                             <input
                                 type="email"
@@ -136,7 +136,7 @@ export function Footer() {
                                 {isSubmitting ? "Enviando..." : "Obtener 10% OFF"}
                             </span>
                         </motion.button>
-                    </div>
+                    </form>
                     <motion.p
                         className="text-white/40 font-mono text-xs mt-2 text-center"
                         initial={{ opacity: 0 }}
@@ -163,7 +163,8 @@ export function Footer() {
                 </motion.div>
 
                 {/* Footer links */}
-                <motion.div
+                <motion.nav
+                    aria-label="Enlaces del pie de página"
                     className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-t border-white/10"
                     variants={containerVariants}
                     initial="hidden"
@@ -188,7 +189,7 @@ export function Footer() {
                             </ul>
                         </motion.div>
                     ))}
-                </motion.div>
+                </motion.nav>
 
                 {/* Bottom bar */}
                 <motion.div

@@ -2,6 +2,7 @@ export interface BlogArticle {
     slug: string
     title: string
     date: string
+    dateISO: string
     excerpt: string
     category: string
     readTime: string
@@ -17,6 +18,7 @@ export const blogArticles: BlogArticle[] = [
         slug: "nutraceuticos",
         title: "¿Has escuchado hablar de los nutracéuticos?",
         date: "8 de febrero de 2024",
+        dateISO: "2024-02-08",
         excerpt:
             "Se define como nutracéutico a cualquier alimento o ingrediente de los alimentos que ejerce acción benéfica en la salud del hombre.",
         category: "Nutracéuticos",
@@ -76,6 +78,7 @@ export const blogArticles: BlogArticle[] = [
         slug: "creatina-mayores-45",
         title: "La Creatina: Un Aliado Sorprendente para la Salud de Mayores de 45 Años",
         date: "14 de noviembre de 2023",
+        dateISO: "2023-11-14",
         excerpt:
             "La creatina ofrece una serie de beneficios significativos para las personas mayores de 45 años, contribuyendo a la mejora de la salud general y la calidad de vida.",
         category: "Suplementos",
@@ -139,6 +142,7 @@ export const blogArticles: BlogArticle[] = [
         slug: "habitos-sanos-salud-calidad",
         title: "Hábitos Sanos para una Salud de Calidad: Tu Guía para una Vida Plena",
         date: "1 de septiembre de 2023",
+        dateISO: "2023-09-01",
         excerpt:
             "La clave para una vida larga y saludable está en nuestros hábitos diarios. Exploramos los hábitos saludables fundamentales para alcanzar una vida plena.",
         category: "Bienestar",
@@ -218,6 +222,7 @@ export const blogArticles: BlogArticle[] = [
         slug: "poder-potencia-levantamiento-pesas",
         title: "El Poder y la Potencia en el Levantamiento de Pesas y el Deporte",
         date: "1 de septiembre de 2023",
+        dateISO: "2023-09-01",
         excerpt:
             "El poder y la potencia son dos cualidades esenciales que desempeñan un papel fundamental en el rendimiento de los atletas en una variedad de disciplinas deportivas.",
         category: "Deporte",
@@ -279,6 +284,7 @@ export const blogArticles: BlogArticle[] = [
         slug: "importancia-energia-entrenamiento",
         title: "La Importancia de la Energía en el Entrenamiento de Pesas y en el Deporte",
         date: "1 de septiembre de 2023",
+        dateISO: "2023-09-01",
         excerpt:
             "La energía es el motor que impulsa a los atletas y a los entusiastas del fitness a lograr sus metas y alcanzar su máximo potencial.",
         category: "Deporte",
@@ -344,6 +350,7 @@ export const blogArticles: BlogArticle[] = [
         slug: "creatina-rendimiento-fisico",
         title: "Maximizando los Resultados del Entrenamiento: El Papel de la Creatina en el Rendimiento Físico",
         date: "28 de agosto de 2023",
+        dateISO: "2023-08-28",
         excerpt:
             "La creatina se ha consolidado como una herramienta efectiva para maximizar los resultados del entrenamiento y mejorar el rendimiento físico.",
         category: "Suplementos",
@@ -413,6 +420,7 @@ export const blogArticles: BlogArticle[] = [
         slug: "arte-ciencia-levantamiento-pesas",
         title: "El Arte y la Ciencia detrás del Levantamiento de Pesas: Más allá de la Fuerza Física",
         date: "24 de agosto de 2023",
+        dateISO: "2023-08-24",
         excerpt:
             "El levantamiento de pesas es una disciplina que combina fuerza, técnica y determinación para lograr hazañas impresionantes de potencia física.",
         category: "Deporte",
@@ -480,6 +488,7 @@ export const blogArticles: BlogArticle[] = [
         slug: "guia-suplementacion-ejercicio",
         title: "Optimizando tu Rendimiento: La Guía de Suplementación para el Ejercicio",
         date: "24 de agosto de 2023",
+        dateISO: "2023-08-24",
         excerpt:
             "Exploraremos los conceptos básicos de la suplementación para el ejercicio y proporcionaremos una visión general de los suplementos más comunes en la comunidad fitness.",
         category: "Suplementos",

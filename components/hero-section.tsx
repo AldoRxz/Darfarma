@@ -105,34 +105,30 @@ export function HeroSection() {
                         </motion.div>
 
                         <div className="space-y-2 overflow-hidden">
-                            <motion.h1
-                                style={{ x: textX1 }}
-                                className="text-6xl md:text-7xl lg:text-[7rem] font-black tracking-tighter text-foreground leading-[0.85]"
-                            >
-                                <motion.span
-                                    variants={fadeUpVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    custom={1}
-                                    className="inline-block"
-                                >
-                                    CUIDA TU
-                                </motion.span>
-                            </motion.h1>
-                            <motion.h1
-                                style={{ x: textX2 }}
-                                className="text-6xl md:text-7xl lg:text-[7rem] font-black tracking-tighter text-foreground leading-[0.85]"
-                            >
-                                <motion.span
-                                    variants={fadeUpVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    custom={2}
-                                    className="inline-block text-primary"
-                                >
-                                    BIENESTAR
-                                </motion.span>
-                            </motion.h1>
+                            <h1 className="text-6xl md:text-7xl lg:text-[7rem] font-black tracking-tighter text-foreground leading-[0.85]">
+                                <motion.div style={{ x: textX1 }}>
+                                    <motion.span
+                                        variants={fadeUpVariants}
+                                        initial="hidden"
+                                        animate="visible"
+                                        custom={1}
+                                        className="inline-block"
+                                    >
+                                        CUIDA TU
+                                    </motion.span>
+                                </motion.div>
+                                <motion.div style={{ x: textX2 }}>
+                                    <motion.span
+                                        variants={fadeUpVariants}
+                                        initial="hidden"
+                                        animate="visible"
+                                        custom={2}
+                                        className="inline-block text-primary"
+                                    >
+                                        BIENESTAR
+                                    </motion.span>
+                                </motion.div>
+                            </h1>
                             <motion.p
                                 variants={fadeUpVariants}
                                 initial="hidden"

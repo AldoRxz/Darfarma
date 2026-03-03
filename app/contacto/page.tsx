@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
+import { BreadcrumbJsonLd } from "@/components/json-ld"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -23,6 +24,12 @@ export default function Contacto() {
         <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">
+                <BreadcrumbJsonLd
+                    items={[
+                        { name: "Inicio", href: "/" },
+                        { name: "Contacto", href: "/contacto" },
+                    ]}
+                />
                 <ContactSection />
             </main>
             <Footer />

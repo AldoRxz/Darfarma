@@ -134,7 +134,7 @@ export function BlogListingSection() {
                                 <div className="flex flex-wrap items-center gap-6 mt-6">
                                     <div className="flex items-center gap-2 text-white/40">
                                         <Calendar className="w-3.5 h-3.5" />
-                                        <span className="font-mono text-xs">{featuredArticle.date}</span>
+                                        <time dateTime={featuredArticle.dateISO} className="font-mono text-xs">{featuredArticle.date}</time>
                                     </div>
                                     <div className="flex items-center gap-2 text-white/40">
                                         <Clock className="w-3.5 h-3.5" />
@@ -186,7 +186,7 @@ export function BlogListingSection() {
                                         <div className="flex items-center gap-4 mt-5 pt-4 border-t border-white/[0.06]">
                                             <div className="flex items-center gap-1.5 text-white/30">
                                                 <Calendar className="w-3 h-3" />
-                                                <span className="font-mono text-[11px]">{article.date}</span>
+                                                <time dateTime={article.dateISO} className="font-mono text-[11px]">{article.date}</time>
                                             </div>
                                             <div className="flex items-center gap-1.5 text-white/30">
                                                 <Clock className="w-3 h-3" />

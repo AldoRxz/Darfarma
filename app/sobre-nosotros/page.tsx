@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { AboutUsSection } from "@/components/about-us-section"
 import { Footer } from "@/components/footer"
+import { BreadcrumbJsonLd } from "@/components/json-ld"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -23,6 +24,12 @@ export default function SobreNosotros() {
         <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">
+                <BreadcrumbJsonLd
+                    items={[
+                        { name: "Inicio", href: "/" },
+                        { name: "Sobre Nosotros", href: "/sobre-nosotros" },
+                    ]}
+                />
                 <AboutUsSection />
             </main>
             <Footer />

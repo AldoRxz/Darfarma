@@ -65,9 +65,9 @@ export function BlogArticleSection({ article }: { article: BlogArticle }) {
                     <div className="flex flex-wrap items-center gap-6 mt-6 pb-8 border-b border-white/[0.08]">
                         <div className="flex items-center gap-2 text-white/40">
                             <Calendar className="w-3.5 h-3.5" />
-                            <span className="font-mono text-xs">
+                            <time dateTime={article.dateISO} className="font-mono text-xs">
                                 {article.date}
-                            </span>
+                            </time>
                         </div>
                         <div className="flex items-center gap-2 text-white/40">
                             <Clock className="w-3.5 h-3.5" />

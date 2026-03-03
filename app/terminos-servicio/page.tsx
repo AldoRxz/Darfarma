@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { TermsOfServiceSection } from "@/components/terms-of-service-section"
 import { Footer } from "@/components/footer"
+import { BreadcrumbJsonLd } from "@/components/json-ld"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -23,6 +24,12 @@ export default function TerminosServicio() {
         <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">
+                <BreadcrumbJsonLd
+                    items={[
+                        { name: "Inicio", href: "/" },
+                        { name: "Términos del Servicio", href: "/terminos-servicio" },
+                    ]}
+                />
                 <TermsOfServiceSection />
             </main>
             <Footer />

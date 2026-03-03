@@ -1,6 +1,6 @@
 import { Header } from "@/components/header"
 import { BlogArticleSection } from "@/components/blog-article-section"
-import { ArticleJsonLd } from "@/components/json-ld"
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/json-ld"
 import { Footer } from "@/components/footer"
 import { getArticleBySlug, getAllSlugs } from "@/lib/blog-data"
 import { notFound } from "next/navigation"
@@ -57,6 +57,13 @@ export default async function BlogArticlePage({ params }: Props) {
             <Header />
             <main className="flex-1">
                 <ArticleJsonLd article={article} />
+                <BreadcrumbJsonLd
+                    items={[
+                        { name: "Inicio", href: "/" },
+                        { name: "Blog", href: "/blog" },
+                        { name: article.title, href: `/blog/${article.slug}` },
+                    ]}
+                />
                 <BlogArticleSection article={article} />
             </main>
             <Footer />

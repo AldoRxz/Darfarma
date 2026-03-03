@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
+import Image from "next/image"
 import { Instagram } from "lucide-react"
 
 const instagramPosts = [
@@ -43,7 +44,7 @@ export function SocialSection() {
     const isInView = useInView(ref, { once: true, margin: "-50px" })
 
     return (
-        <section className="relative py-16 bg-[#121212] overflow-hidden">
+        <section aria-label="Redes sociales" className="relative py-16 bg-[#121212] overflow-hidden">
             <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
@@ -93,10 +94,13 @@ export function SocialSection() {
                             }}
                             className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
                         >
-                            <img
+                            <Image
                                 src={post.image}
-                                alt={`Instagram post ${index + 1}`}
-                                className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                alt={`Publicación de Instagram de Dar Farma - ${post.likes} likes`}
+                                fill
+                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                                loading="lazy"
                             />
                             <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300" />
                         </motion.a>
@@ -125,7 +129,7 @@ export function SocialSection() {
                             transition={{ duration: 0.6 }}
                         />
                         <Instagram className="w-4 h-4 relative z-10" />
-                        <span className="relative z-10">Follow @darfarmaoficial</span>
+                        <span className="relative z-10">Seguir @darfarmaoficial</span>
                     </motion.a>
                 </motion.div>
             </div>

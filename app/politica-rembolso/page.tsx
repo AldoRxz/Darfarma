@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { RefundPolicySection } from "@/components/refund-policy-section"
 import { Footer } from "@/components/footer"
+import { BreadcrumbJsonLd } from "@/components/json-ld"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -23,6 +24,12 @@ export default function PoliticaRembolso() {
         <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">
+                <BreadcrumbJsonLd
+                    items={[
+                        { name: "Inicio", href: "/" },
+                        { name: "Política de Reembolso", href: "/politica-rembolso" },
+                    ]}
+                />
                 <RefundPolicySection />
             </main>
             <Footer />
