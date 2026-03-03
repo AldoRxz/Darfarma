@@ -55,7 +55,7 @@ export function Footer() {
                 { label: "Inicio", href: "#" },
                 { label: "Productos", href: "#productos" },
                 { label: "Sobre Nosotros", href: "/sobre-nosotros" },
-                { label: "Contacto", href: "#contacto" },
+                { label: "Contacto", href: "/contacto" },
             ],
         },
         {
@@ -64,7 +64,7 @@ export function Footer() {
                 { label: "Sobre Nosotros", href: "/sobre-nosotros" },
                 { label: "Blog", href: "/blog" },
                 { label: "Distribuidores", href: "#" },
-                { label: "Contacto", href: "#contacto" },
+                { label: "Contacto", href: "/contacto" },
             ],
         },
         {
