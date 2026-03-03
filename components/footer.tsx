@@ -70,7 +70,7 @@ export function Footer() {
         {
             title: "Legal",
             links: [
-                { label: "Política de Privacidad", href: "#" },
+                { label: "Política de Privacidad", href: "/politica-privacidad" },
                 { label: "Términos de Servicio", href: "#" },
                 { label: "Política de Reembolso", href: "/politica-rembolso" },
                 { label: "Aviso Legal", href: "#" },
