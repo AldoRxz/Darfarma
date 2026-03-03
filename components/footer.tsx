@@ -72,6 +72,7 @@ export function Footer() {
             links: [
                 { label: "Política de Privacidad", href: "#" },
                 { label: "Términos de Servicio", href: "#" },
+                { label: "Política de Reembolso", href: "/politica-rembolso" },
                 { label: "Aviso Legal", href: "#" },
             ],
         },
