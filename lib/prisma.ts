@@ -1,19 +1,30 @@
 import { PrismaClient } from "@prisma/client"
-import { PrismaPg } from "@prisma/adapter-pg"
 
 const globalForPrisma = globalThis as unknown as {
-    prisma: PrismaClient | undefined
+    _prisma: PrismaClient | undefined
 }
 
-function createPrismaClient() {
-    const connectionString = process.env.DATABASE_URL
-    if (!connectionString) {
-        throw new Error("DATABASE_URL is not set")
+function getClient(): PrismaClient {
+    if (globalForPrisma._prisma) return globalForPrisma._prisma
+
+    // Dynamic import of adapter to avoid Turbopack bundling native pg
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { PrismaPg } = require("@prisma/adapter-pg")
+    const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+    const client = new PrismaClient({ adapter })
+
+    if (process.env.NODE_ENV !== "production") {
+        globalForPrisma._prisma = client
     }
-    const adapter = new PrismaPg({ connectionString })
-    return new PrismaClient({ adapter })
+
+    return client
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient()
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
+// Use a Proxy so that `prisma.user.findMany()` etc. work seamlessly
+// but the actual client is only created on first property access (at runtime, not build time)
+export const prisma: PrismaClient = new Proxy({} as PrismaClient, {
+    get(_target, prop) {
+        const client = getClient()
+        return Reflect.get(client, prop)
+    },
+})
