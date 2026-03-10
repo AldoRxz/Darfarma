@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { useRef } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 }
 
@@ -147,38 +148,42 @@ export function HeroSection() {
                             custom={4}
                             className="flex flex-wrap gap-4 pt-6"
                         >
-                            <motion.button
-                                className="bg-primary text-primary-foreground px-10 py-4 rounded-full font-bold text-base tracking-wide flex items-center gap-2 group relative overflow-hidden"
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                            >
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
-                                    whileHover={{ x: "200%" }}
-                                    transition={{ duration: 0.6 }}
-                                />
-                                <span className="relative z-10">Comprar Ahora</span>
-                                <motion.svg
-                                    className="w-4 h-4 relative z-10"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    initial={{ x: 0 }}
-                                    whileHover={{ x: 4 }}
+                            <Link href="/productos">
+                                <motion.button
+                                    className="bg-primary text-primary-foreground px-10 py-4 rounded-full font-bold text-base tracking-wide flex items-center gap-2 group relative overflow-hidden"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
                                     transition={{ type: "spring", stiffness: 400, damping: 17 }}
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </motion.svg>
-                            </motion.button>
-                            <motion.button
-                                className="border-2 border-foreground text-foreground px-10 py-4 rounded-full font-bold text-base tracking-wide relative overflow-hidden"
-                                whileHover={{ scale: 1.02, backgroundColor: "var(--foreground)", color: "var(--background)" }}
-                                whileTap={{ scale: 0.98 }}
-                                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                            >
-                                Ver Productos
-                            </motion.button>
+                                    <motion.div
+                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
+                                        whileHover={{ x: "200%" }}
+                                        transition={{ duration: 0.6 }}
+                                    />
+                                    <span className="relative z-10">Comprar Ahora</span>
+                                    <motion.svg
+                                        className="w-4 h-4 relative z-10"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        initial={{ x: 0 }}
+                                        whileHover={{ x: 4 }}
+                                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </motion.svg>
+                                </motion.button>
+                            </Link>
+                            <Link href="/productos">
+                                <motion.button
+                                    className="border-2 border-foreground text-foreground px-10 py-4 rounded-full font-bold text-base tracking-wide relative overflow-hidden"
+                                    whileHover={{ scale: 1.02, backgroundColor: "var(--foreground)", color: "var(--background)" }}
+                                    whileTap={{ scale: 0.98 }}
+                                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                >
+                                    Ver Productos
+                                </motion.button>
+                            </Link>
                         </motion.div>
 
                         <motion.div

@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useCart } from "@/lib/cart-context"
 
 const navLinks = [
-    { label: "Productos", href: "#productos" },
+    { label: "Productos", href: "/productos" },
     { label: "Sobre Nosotros", href: "/sobre-nosotros" },
     { label: "Blog", href: "/blog" },
     { label: "Contacto", href: "/contacto" },
