@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ShoppingCart, Menu, X, Leaf, User } from "lucide-react"
 import Link from "next/link"
+import { useCart } from "@/lib/cart-context"
 
 const navLinks = [
     { label: "Productos", href: "#productos" },
@@ -13,6 +14,7 @@ const navLinks = [
 
 export function Header() {
     const [mobileOpen, setMobileOpen] = useState(false)
+    const { totalItems } = useCart()
 
     return (
         <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/50">
@@ -58,7 +60,7 @@ export function Header() {
                     >
                         <ShoppingCart className="h-5 w-5 text-foreground" />
                         <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
-                            0
+                            {totalItems}
                         </span>
                     </Link>
 

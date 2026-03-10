@@ -3,10 +3,12 @@
 import { useRef, useEffect, useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 import { ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react"
 
 interface Product {
     name: string
+    slug: string
     description: string
     price: string
     image: string
@@ -16,6 +18,7 @@ interface Product {
 const products: Product[] = [
     {
         name: "Citrato de Magnesio",
+        slug: "citrato-de-magnesio",
         description:
             "Citrato de Magnesio puro sin excipientes. 240 cápsulas para relajación y recuperación muscular.",
         price: "$349.00",
@@ -24,6 +27,7 @@ const products: Product[] = [
     },
     {
         name: "Colágeno Hidrolizado",
+        slug: "colageno-hidrolizado",
         description:
             "Colágeno hidrolizado premium para piel, cabello, uñas y articulaciones saludables.",
         price: "$399.00",
@@ -31,6 +35,7 @@ const products: Product[] = [
     },
     {
         name: "Omega 3",
+        slug: "omega-3",
         description:
             "Ácidos grasos omega-3 de alta pureza para la salud cardiovascular y función cognitiva.",
         price: "$289.00",
@@ -38,6 +43,7 @@ const products: Product[] = [
     },
     {
         name: "Creatina Monohidratada",
+        slug: "creatina-monohidratada",
         description:
             "Creatina monohidratada de grado farmacéutico para rendimiento y fuerza muscular.",
         price: "$329.00",
@@ -46,6 +52,7 @@ const products: Product[] = [
     },
     {
         name: "Colágeno + Glucosamina",
+        slug: "colageno-glucosamina",
         description:
             "Fórmula avanzada de colágeno hidrolizado con glucosamina para articulaciones y movilidad.",
         price: "$449.00",
@@ -53,6 +60,7 @@ const products: Product[] = [
     },
     {
         name: "Magnesio Premium",
+        slug: "magnesio-premium",
         description:
             "Suplemento alimenticio de Citrato de Magnesio en presentación premium de 240 cápsulas.",
         price: "$379.00",
@@ -60,46 +68,48 @@ const products: Product[] = [
     },
 ]
 
-function ProductCard({ name, description, price, image, tag }: Product) {
+function ProductCard({ name, slug, description, price, image, tag }: Product) {
     return (
-        <article className="group flex flex-col overflow-hidden rounded-xl border border-border/60 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg h-full">
-            {/* Product Image */}
-            <div className="relative aspect-square overflow-hidden bg-muted/20">
-                {tag && (
-                    <div className="absolute top-2 left-2 z-20 bg-primary text-primary-foreground text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-full shadow-sm">
-                        {tag}
-                    </div>
-                )}
-                <Image
-                    src={image}
-                    alt={`Suplemento natural Dar Farma - ${name}`}
-                    fill
-                    className="object-contain p-4 md:p-8 transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-                />
-            </div>
-
-            {/* Card Body */}
-            <div className="flex flex-1 flex-col p-3 md:p-5">
-                <h3 className="text-xs md:text-base font-bold tracking-tight text-card-foreground line-clamp-1">
-                    {name}
-                </h3>
-                <p className="mt-1 flex-1 text-[11px] md:text-sm leading-relaxed text-muted-foreground line-clamp-2 hidden sm:block">
-                    {description}
-                </p>
-                <div className="mt-2 md:mt-4 flex items-center justify-between">
-                    <span className="text-sm md:text-lg font-bold text-foreground">{price}</span>
-                    <button
-                        className="inline-flex items-center gap-1 md:gap-2 rounded-lg bg-primary px-2 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs font-semibold text-primary-foreground transition-all hover:bg-[#6ab848]"
-                        aria-label={`Agregar ${name} al carrito`}
-                    >
-                        <ShoppingCart className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                        <span className="hidden sm:inline">Agregar</span>
-                        <span className="sm:hidden">+</span>
-                    </button>
+        <Link href={`/productos/${slug}`}>
+            <article className="group flex flex-col overflow-hidden rounded-xl border border-border/60 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg h-full cursor-pointer">
+                {/* Product Image */}
+                <div className="relative aspect-square overflow-hidden bg-muted/20">
+                    {tag && (
+                        <div className="absolute top-2 left-2 z-20 bg-primary text-primary-foreground text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-full shadow-sm">
+                            {tag}
+                        </div>
+                    )}
+                    <Image
+                        src={image}
+                        alt={`Suplemento natural Dar Farma - ${name}`}
+                        fill
+                        className="object-contain p-4 md:p-8 transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                    />
                 </div>
-            </div>
-        </article>
+
+                {/* Card Body */}
+                <div className="flex flex-1 flex-col p-3 md:p-5">
+                    <h3 className="text-xs md:text-base font-bold tracking-tight text-card-foreground line-clamp-1">
+                        {name}
+                    </h3>
+                    <p className="mt-1 flex-1 text-[11px] md:text-sm leading-relaxed text-muted-foreground line-clamp-2 hidden sm:block">
+                        {description}
+                    </p>
+                    <div className="mt-2 md:mt-4 flex items-center justify-between">
+                        <span className="text-sm md:text-lg font-bold text-foreground">{price}</span>
+                        <span
+                            className="inline-flex items-center gap-1 md:gap-2 rounded-lg bg-primary px-2 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs font-semibold text-primary-foreground transition-all hover:bg-[#6ab848]"
+                            aria-label={`Ver ${name}`}
+                        >
+                            <ShoppingCart className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                            <span className="hidden sm:inline">Ver más</span>
+                            <span className="sm:hidden">+</span>
+                        </span>
+                    </div>
+                </div>
+            </article>
+        </Link>
     )
 }
 
