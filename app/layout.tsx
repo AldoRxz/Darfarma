@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Montserrat } from 'next/font/google'
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/json-ld'
+import { Providers } from '@/components/providers'
 import './globals.css'
 
 const montserrat = Montserrat({
@@ -92,9 +93,11 @@ export default function RootLayout({
     return (
         <html lang="es">
             <body className={`${montserrat.variable} font-sans antialiased`}>
-                <OrganizationJsonLd />
-                <WebSiteJsonLd />
-                {children}
+                <Providers>
+                    <OrganizationJsonLd />
+                    <WebSiteJsonLd />
+                    {children}
+                </Providers>
             </body>
         </html>
     )

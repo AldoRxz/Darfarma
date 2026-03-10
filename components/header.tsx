@@ -42,15 +42,17 @@ export function Header() {
                 {/* User + Cart + Mobile Toggle */}
                 <div className="flex items-center gap-2">
                     {/* User Button */}
-                    <button
+                    <Link
+                        href="/login"
                         aria-label="Mi cuenta"
                         className="relative rounded-full p-2 transition-colors hover:bg-primary/10"
                     >
                         <User className="h-5 w-5 text-foreground" />
-                    </button>
+                    </Link>
 
                     {/* Cart Button */}
-                    <button
+                    <Link
+                        href="/carrito"
                         aria-label="Carrito de compras"
                         className="relative rounded-full p-2 transition-colors hover:bg-primary/10"
                     >
@@ -58,7 +60,7 @@ export function Header() {
                         <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
                             0
                         </span>
-                    </button>
+                    </Link>
 
                     {/* Mobile Toggle */}
                     <button
