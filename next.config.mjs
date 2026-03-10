@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    serverExternalPackages: ['@prisma/adapter-pg', 'pg', 'bcryptjs'],
     typescript: {
         ignoreBuildErrors: true,
     },
