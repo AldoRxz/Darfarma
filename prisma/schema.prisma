@@ -1,0 +1,393 @@
+// Darfarma E-commerce Database Schema
+// PostgreSQL — Compatible with Neon, Supabase, Vercel Postgres, Railway
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────
+// AUTH — NextAuth.js v5 required models
+// ─────────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─────────────────────────────────────────────
+// USER
+// ─────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String? // null when using OAuth
+  phone         String?
+  role          Role      @default(CUSTOMER)
+  emailVerified DateTime?
+  image         String? // avatar URL
+
+  // NextAuth relations
+  accounts Account[]
+  sessions Session[]
+
+  // E-commerce relations
+  addresses Address[]
+  orders    Order[]
+  cartItems CartItem[]
+  reviews   Review[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+// ─────────────────────────────────────────────
+// PRODUCTS
+// ─────────────────────────────────────────────
+
+model Category {
+  id          String  @id @default(cuid())
+  name        String  @unique // "Minerales", "Proteínas"
+  slug        String  @unique
+  description String?
+  image       String?
+  position    Int     @default(0)
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  name        String // "Citrato de Magnesio"
+  slug        String  @unique // "citrato-de-magnesio"
+  description String  @db.Text
+  shortDesc   String? // short description for cards
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  isActive   Boolean  @default(true) // visible in store
+  isFeatured Boolean  @default(false) // show in featured section
+  tags       String[] @default([]) // ["Más vendido", "Nuevo"]
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+
+  // Relations
+  variants ProductVariant[]
+  images   ProductImage[]
+  reviews  Review[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([isActive, isFeatured])
+}
+
+model ProductVariant {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  name      String // "240 cápsulas", "120 cápsulas"
+  sku       String  @unique // unique inventory code
+  price     Decimal @db.Decimal(10, 2) // 349.00
+  compareAt Decimal? @db.Decimal(10, 2) // previous price (for discounts)
+
+  stock   Int      @default(0)
+  weight  Decimal? @db.Decimal(8, 2) // grams, for shipping calculation
+
+  isDefault Boolean @default(false) // main variant
+  isActive  Boolean @default(true)
+
+  // Relations
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  url      String // image URL
+  alt      String? // alt text
+  position Int     @default(0) // display order
+
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}
+
+// ─────────────────────────────────────────────
+// SHOPPING CART
+// ─────────────────────────────────────────────
+
+model CartItem {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  quantity Int @default(1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, variantId]) // one item per variant per user
+}
+
+// ─────────────────────────────────────────────
+// ADDRESSES
+// ─────────────────────────────────────────────
+
+model Address {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  fullName   String // recipient name
+  phone      String
+  street     String // street and number
+  interior   String? // apt number
+  colony     String // colonia (Mexican address)
+  city       String
+  state      String
+  zipCode    String
+  country    String  @default("México")
+  references String? // "entre calle X y calle Y"
+
+  isDefault Boolean @default(false)
+
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ─────────────────────────────────────────────
+// ORDERS
+// ─────────────────────────────────────────────
+
+model Order {
+  id          String @id @default(cuid())
+  orderNumber String @unique // "DF-20260308-001"
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  addressId String
+  address   Address @relation(fields: [addressId], references: [id])
+
+  status OrderStatus @default(PENDING)
+
+  subtotal Decimal @db.Decimal(10, 2)
+  shipping Decimal @db.Decimal(10, 2) @default(0)
+  discount Decimal @db.Decimal(10, 2) @default(0)
+  tax      Decimal @db.Decimal(10, 2) @default(0)
+  total    Decimal @db.Decimal(10, 2)
+
+  couponId String?
+  coupon   Coupon? @relation(fields: [couponId], references: [id])
+
+  notes      String? // customer notes
+  adminNotes String? // internal admin notes
+
+  // Shipping
+  trackingNumber String?
+  carrier        String? // "Estafeta", "FedEx", "DHL"
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+
+  // Relations
+  items   OrderItem[]
+  payment Payment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum OrderStatus {
+  PENDING
+  PAYMENT_PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+model OrderItem {
+  id String @id @default(cuid())
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id])
+
+  // Snapshot at time of purchase (doesn't change if product is edited later)
+  productName String
+  variantName String
+  unitPrice   Decimal @db.Decimal(10, 2)
+  quantity    Int
+  totalPrice  Decimal @db.Decimal(10, 2)
+
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+}
+
+// ─────────────────────────────────────────────
+// PAYMENTS (Stripe-ready)
+// ─────────────────────────────────────────────
+
+model Payment {
+  id String @id @default(cuid())
+
+  orderId String @unique
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  method PaymentMethod
+  status PaymentStatus @default(PENDING)
+
+  amount   Decimal @db.Decimal(10, 2)
+  currency String  @default("MXN")
+
+  // Stripe fields (populated when integrated)
+  stripePaymentId  String? @unique // pi_xxxxx
+  stripeSessionId  String? // cs_xxxxx
+  stripeReceiptUrl String?
+
+  paidAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PaymentMethod {
+  STRIPE
+  TRANSFER // bank transfer
+  CASH_ON_DELIVERY
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+// ─────────────────────────────────────────────
+// COUPONS
+// ─────────────────────────────────────────────
+
+model Coupon {
+  id    String     @id @default(cuid())
+  code  String     @unique // "DARFARMA10"
+  type  CouponType
+  value Decimal    @db.Decimal(10, 2) // 10 (%) or 50 ($)
+
+  minPurchase Decimal? @db.Decimal(10, 2) // minimum purchase amount
+  maxUses     Int? // max total uses
+  usedCount   Int      @default(0)
+
+  isActive  Boolean   @default(true)
+  expiresAt DateTime?
+
+  orders Order[]
+
+  createdAt DateTime @default(now())
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED
+}
+
+// ─────────────────────────────────────────────
+// REVIEWS
+// ─────────────────────────────────────────────
+
+model Review {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  rating    Int // 1-5
+  title     String?
+  comment   String?  @db.Text
+  isVisible Boolean  @default(true) // admin can hide reviews
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, productId]) // one review per product per user
+  @@index([productId])
+}

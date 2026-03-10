@@ -6,8 +6,12 @@ node_modules/
 out/
 
 # Environment
+.env
 .env*.local
 
 # System
 .DS_Store
 Thumbs.db
+
+# Prisma
+/lib/generated/prisma
