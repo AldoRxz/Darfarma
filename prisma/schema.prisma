@@ -72,6 +72,7 @@ model User {
   orders    Order[]
   cartItems CartItem[]
   reviews   Review[]
+  blogPosts BlogPost[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -390,4 +391,30 @@ model Review {
 
   @@unique([userId, productId]) // one review per product per user
   @@index([productId])
+}
+
+// ─────────────────────────────────────────────
+// BLOG
+// ─────────────────────────────────────────────
+
+model BlogPost {
+  id        String  @id @default(cuid())
+  slug      String  @unique
+  title     String
+  excerpt   String  @db.Text
+  category  String
+  readTime  String  @default("5 min")
+  image     String  // URL
+  content   Json    // structured content blocks
+  published Boolean @default(false)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([published])
+  @@index([category])
 }
