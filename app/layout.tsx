@@ -92,7 +92,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="es">
-            <body className={`${montserrat.variable} font-sans antialiased`}>
+            <body className={`${montserrat.variable} font-sans antialiased`} suppressHydrationWarning>
                 <Providers>
                     <OrganizationJsonLd />
                     <WebSiteJsonLd />

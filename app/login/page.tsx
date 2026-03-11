@@ -1,5 +1,6 @@
 "use client"
 
+
 import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -30,7 +31,11 @@ export default function LoginPage() {
             if (result?.error) {
                 setError("Email o contraseña incorrectos")
             } else {
-                router.push("/perfil")
+                // Fetch session to check role
+                const sessionRes = await fetch("/api/auth/session")
+                const session = await sessionRes.json()
+                const isAdmin = session?.user?.role === "ADMIN"
+                router.push(isAdmin ? "/admin" : "/perfil")
                 router.refresh()
             }
         } catch {
