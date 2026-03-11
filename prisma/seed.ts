@@ -245,6 +245,29 @@ async function main() {
     })
     console.log(`✅ Sample coupon created: ${coupon.code} (10% off)`)
 
+    // ─── Blog Posts ──────────────────────────────
+    const { blogArticles } = await import("../lib/blog-data")
+    let blogCount = 0
+    for (const article of blogArticles) {
+        await prisma.blogPost.upsert({
+            where: { slug: article.slug },
+            update: {},
+            create: {
+                slug: article.slug,
+                title: article.title,
+                excerpt: article.excerpt,
+                category: article.category,
+                readTime: article.readTime,
+                image: article.image,
+                content: article.content,
+                published: true,
+                authorId: admin.id,
+            },
+        })
+        blogCount++
+    }
+    console.log(`✅ Seeded ${blogCount} blog articles`)
+
     console.log("\n🎉 Seeding completed!")
 }
 
