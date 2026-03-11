@@ -1,22 +1,25 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import type { NextRequest } from "next/server"
+import { getToken } from "next-auth/jwt"
 
-export default auth((req) => {
+export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl
-    const isAdmin = req.auth?.user?.role === "ADMIN"
 
-    // Protect /admin routes - only admins
+    // Protect /admin routes — only admins
     if (pathname.startsWith("/admin")) {
-        if (!req.auth?.user) {
+        const token = await getToken({ req, secret: process.env.AUTH_SECRET })
+
+        if (!token) {
             return NextResponse.redirect(new URL("/login", req.url))
         }
-        if (!isAdmin) {
+
+        if (token.role !== "ADMIN") {
             return NextResponse.redirect(new URL("/", req.url))
         }
     }
 
     return NextResponse.next()
-})
+}
 
 export const config = {
     matcher: ["/admin/:path*"],
