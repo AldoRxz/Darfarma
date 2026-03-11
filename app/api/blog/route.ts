@@ -28,7 +28,12 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({ posts })
     } catch (error) {
-        console.error("Blog API error:", error)
-        return NextResponse.json({ posts: [], error: "Error fetching posts" }, { status: 500 })
+        const message = error instanceof Error ? error.message : "Unknown error"
+        const stack = error instanceof Error ? error.stack : undefined
+        console.error("Blog API error:", message, stack)
+        return NextResponse.json(
+            { posts: [], error: message, hasDbUrl: !!process.env.DATABASE_URL },
+            { status: 500 }
+        )
     }
 }
