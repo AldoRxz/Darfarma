@@ -6,12 +6,12 @@ import Image from "next/image"
 import { Instagram } from "lucide-react"
 
 const instagramPosts = [
-    { image: "https://www.instagram.com/p/DNHKBirzW3p/media/?size=l", link: "https://www.instagram.com/p/DNHKBirzW3p/", likes: "2.4k" },
-    { image: "https://www.instagram.com/p/DMiWmrepmWW/media/?size=l", link: "https://www.instagram.com/p/DMiWmrepmWW/", likes: "1.8k" },
-    { image: "https://www.instagram.com/p/DMaoAF1ibsW/media/?size=l", link: "https://www.instagram.com/p/DMaoAF1ibsW/", likes: "3.2k" },
-    { image: "https://www.instagram.com/p/DMS6LBHtN8n/media/?size=l", link: "https://www.instagram.com/p/DMS6LBHtN8n/", likes: "956" },
-    { image: "https://www.instagram.com/p/DMLLVU_MSWZ/media/?size=l", link: "https://www.instagram.com/p/DMLLVU_MSWZ/", likes: "1.5k" },
-    { image: "https://www.instagram.com/p/DMGCM4JtA2s/media/?size=l", link: "https://www.instagram.com/p/DMGCM4JtA2s/", likes: "2.1k" },
+    { image: "/products/citrato.png", link: "https://www.instagram.com/darfarmaoficial/reel/DXxUGiNt9Tu/", label: "Citrato de Magnesio" },
+    { image: "/products/Omega 3.png", link: "https://www.instagram.com/darfarmaoficial/p/DMiWmrepmWW/", label: "Omega 3" },
+    { image: "/products/darfarma-magnesio.png", link: "https://www.instagram.com/darfarmaoficial/p/DKh2JztTPSc/", label: "Magnesio Premium" },
+    { image: "/products/colageno.png", link: "https://www.instagram.com/darfarmaoficial/p/DItzQ9NpxLA/", label: "Colágeno Hidrolizado" },
+    { image: "/products/Creatina-Monohidratada.png", link: "https://www.instagram.com/darfarmaoficial/p/DJXXsTMTnmH/", label: "Creatina Monohidratada" },
+    { image: "/products/Colágeno Hidrolizado + Glucosamina.png", link: "https://www.instagram.com/darfarmaoficial/p/DAZXuLqz840/", label: "Colágeno + Glucosamina" },
 ]
 
 const containerVariants = {
@@ -92,17 +92,20 @@ export function SocialSection() {
                                 zIndex: 10,
                                 transition: { type: "spring", stiffness: 300, damping: 20 },
                             }}
-                            className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
+                            className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer bg-[#1a1a1a]"
                         >
                             <Image
                                 src={post.image}
-                                alt={`Publicación de Instagram de Dar Farma - ${post.likes} likes`}
+                                alt={`Dar Farma - ${post.label}`}
                                 fill
-                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                className="object-contain p-4 grayscale group-hover:grayscale-0 transition-all duration-500"
                                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                                 loading="lazy"
                             />
                             <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300" />
+                            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <span className="text-white text-[10px] font-medium">{post.label}</span>
+                            </div>
                         </motion.a>
                     ))}
                 </motion.div>

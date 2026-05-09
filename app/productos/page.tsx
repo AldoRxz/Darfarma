@@ -1,76 +1,64 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useState, useMemo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { Search, SlidersHorizontal, X, ShoppingCart, ChevronDown } from "lucide-react"
 import { Header } from "@/components/header"
-
-interface Product {
-    id: string
-    name: string
-    slug: string
-    shortDesc: string | null
-    tags: string[]
-    category: { name: string; slug: string } | null
-    price: number
-    compareAt: number | null
-    image: string
-    isFeatured: boolean
-}
-
-interface Category {
-    name: string
-    slug: string
-}
+import { products, categories } from "@/lib/products-data"
 
 const sortOptions = [
     { value: "featured", label: "Destacados" },
-    { value: "newest", label: "Más recientes" },
     { value: "price-asc", label: "Precio: menor a mayor" },
     { value: "price-desc", label: "Precio: mayor a menor" },
     { value: "name", label: "Nombre A-Z" },
 ]
 
 export default function ProductsPage() {
-    const [products, setProducts] = useState<Product[]>([])
-    const [categories, setCategories] = useState<Category[]>([])
-    const [loading, setLoading] = useState(true)
-    const [search, setSearch] = useState("")
+    const [searchInput, setSearchInput] = useState("")
     const [selectedCategory, setSelectedCategory] = useState("")
     const [sort, setSort] = useState("featured")
     const [showFilters, setShowFilters] = useState(false)
-    const [searchInput, setSearchInput] = useState("")
 
-    const fetchProducts = useCallback(async () => {
-        setLoading(true)
-        try {
-            const params = new URLSearchParams()
-            if (search) params.set("search", search)
-            if (selectedCategory) params.set("category", selectedCategory)
-            if (sort) params.set("sort", sort)
+    const filteredProducts = useMemo(() => {
+        let result = [...products]
 
-            const res = await fetch(`/api/productos?${params.toString()}`)
-            const data = await res.json()
-            setProducts(data.products || [])
-            setCategories(data.categories || [])
-        } catch {
-            console.error("Error fetching products")
-        } finally {
-            setLoading(false)
+        // Search filter
+        if (searchInput) {
+            const q = searchInput.toLowerCase()
+            result = result.filter(
+                (p) =>
+                    p.name.toLowerCase().includes(q) ||
+                    p.shortDesc.toLowerCase().includes(q) ||
+                    p.category.name.toLowerCase().includes(q)
+            )
         }
-    }, [search, selectedCategory, sort])
 
-    useEffect(() => {
-        fetchProducts()
-    }, [fetchProducts])
+        // Category filter
+        if (selectedCategory) {
+            result = result.filter((p) => p.category.slug === selectedCategory)
+        }
 
-    // Debounced search
-    useEffect(() => {
-        const timeout = setTimeout(() => setSearch(searchInput), 400)
-        return () => clearTimeout(timeout)
-    }, [searchInput])
+        // Sort
+        switch (sort) {
+            case "price-asc":
+                result.sort((a, b) => a.price - b.price)
+                break
+            case "price-desc":
+                result.sort((a, b) => b.price - a.price)
+                break
+            case "name":
+                result.sort((a, b) => a.name.localeCompare(b.name))
+                break
+            case "featured":
+            default:
+                result.sort((a, b) => (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0))
+                break
+        }
+
+        return result
+    }, [searchInput, selectedCategory, sort])
 
     return (
         <div className="min-h-screen bg-background">
@@ -109,7 +97,7 @@ export default function ProductsPage() {
                         />
                         {searchInput && (
                             <button
-                                onClick={() => { setSearchInput(""); setSearch(""); }}
+                                onClick={() => setSearchInput("")}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-muted transition-colors"
                             >
                                 <X className="h-3.5 w-3.5 text-muted-foreground" />
@@ -142,7 +130,7 @@ export default function ProductsPage() {
                 </div>
 
                 <div className="flex gap-8">
-                    {/* Sidebar Filters — Desktop always visible, Mobile toggleable */}
+                    {/* Sidebar Filters */}
                     <aside className={`${showFilters ? "block" : "hidden"} md:block w-full md:w-56 flex-shrink-0`}>
                         <div className="bg-card border border-border rounded-xl p-5 sticky top-24">
                             <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
@@ -153,8 +141,8 @@ export default function ProductsPage() {
                                 <button
                                     onClick={() => setSelectedCategory("")}
                                     className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${!selectedCategory
-                                            ? "bg-primary/10 text-primary font-semibold"
-                                            : "text-foreground hover:bg-muted"
+                                        ? "bg-primary/10 text-primary font-semibold"
+                                        : "text-foreground hover:bg-muted"
                                         }`}
                                 >
                                     Todos
@@ -162,12 +150,14 @@ export default function ProductsPage() {
                                 {categories.map((cat) => (
                                     <button
                                         key={cat.slug}
-                                        onClick={() => setSelectedCategory(
-                                            selectedCategory === cat.slug ? "" : cat.slug
-                                        )}
+                                        onClick={() =>
+                                            setSelectedCategory(
+                                                selectedCategory === cat.slug ? "" : cat.slug
+                                            )
+                                        }
                                         className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${selectedCategory === cat.slug
-                                                ? "bg-primary/10 text-primary font-semibold"
-                                                : "text-foreground hover:bg-muted"
+                                            ? "bg-primary/10 text-primary font-semibold"
+                                            : "text-foreground hover:bg-muted"
                                             }`}
                                     >
                                         {cat.name}
@@ -182,15 +172,15 @@ export default function ProductsPage() {
                         {/* Results count */}
                         <div className="flex items-center justify-between mb-4">
                             <p className="text-sm text-muted-foreground">
-                                {loading ? "Cargando..." : `${products.length} producto${products.length !== 1 ? "s" : ""}`}
-                                {search && <span className="text-foreground"> para &quot;{search}&quot;</span>}
+                                {filteredProducts.length} producto{filteredProducts.length !== 1 ? "s" : ""}
+                                {searchInput && <span className="text-foreground"> para &quot;{searchInput}&quot;</span>}
                                 {selectedCategory && (
                                     <span className="text-foreground"> en {categories.find(c => c.slug === selectedCategory)?.name}</span>
                                 )}
                             </p>
-                            {(search || selectedCategory) && (
+                            {(searchInput || selectedCategory) && (
                                 <button
-                                    onClick={() => { setSearchInput(""); setSearch(""); setSelectedCategory(""); }}
+                                    onClick={() => { setSearchInput(""); setSelectedCategory(""); }}
                                     className="text-xs text-primary hover:underline font-medium"
                                 >
                                     Limpiar filtros
@@ -198,17 +188,7 @@ export default function ProductsPage() {
                             )}
                         </div>
 
-                        {loading ? (
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                                {[...Array(6)].map((_, i) => (
-                                    <div key={i} className="animate-pulse">
-                                        <div className="aspect-square bg-muted rounded-xl mb-3" />
-                                        <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-                                        <div className="h-3 bg-muted rounded w-1/2" />
-                                    </div>
-                                ))}
-                            </div>
-                        ) : products.length === 0 ? (
+                        {filteredProducts.length === 0 ? (
                             <div className="text-center py-16">
                                 <Search className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
                                 <h3 className="text-lg font-bold text-foreground mb-2">
@@ -218,7 +198,7 @@ export default function ProductsPage() {
                                     Intenta con otra búsqueda o cambia los filtros.
                                 </p>
                                 <button
-                                    onClick={() => { setSearchInput(""); setSearch(""); setSelectedCategory(""); }}
+                                    onClick={() => { setSearchInput(""); setSelectedCategory(""); }}
                                     className="text-sm text-primary hover:underline font-medium"
                                 >
                                     Ver todos los productos
@@ -231,7 +211,7 @@ export default function ProductsPage() {
                                 transition={{ duration: 0.3 }}
                                 className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
                             >
-                                {products.map((product, i) => {
+                                {filteredProducts.map((product, i) => {
                                     const discount = product.compareAt
                                         ? Math.round(((product.compareAt - product.price) / product.compareAt) * 100)
                                         : null
@@ -265,11 +245,9 @@ export default function ProductsPage() {
                                                         />
                                                     </div>
                                                     <div className="flex flex-1 flex-col p-3 md:p-5">
-                                                        {product.category && (
-                                                            <span className="text-[10px] text-primary font-semibold uppercase tracking-wider mb-1">
-                                                                {product.category.name}
-                                                            </span>
-                                                        )}
+                                                        <span className="text-[10px] text-primary font-semibold uppercase tracking-wider mb-1">
+                                                            {product.category.name}
+                                                        </span>
                                                         <h3 className="text-xs md:text-base font-bold tracking-tight text-card-foreground line-clamp-1">
                                                             {product.name}
                                                         </h3>
