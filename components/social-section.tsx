@@ -6,12 +6,12 @@ import Image from "next/image"
 import { Instagram } from "lucide-react"
 
 const instagramPosts = [
-    { image: "/products/citrato.png", link: "https://www.instagram.com/darfarmaoficial/reel/DXxUGiNt9Tu/", label: "Citrato de Magnesio" },
-    { image: "/products/Omega 3.png", link: "https://www.instagram.com/darfarmaoficial/p/DMiWmrepmWW/", label: "Omega 3" },
-    { image: "/products/darfarma-magnesio.png", link: "https://www.instagram.com/darfarmaoficial/p/DKh2JztTPSc/", label: "Magnesio Premium" },
-    { image: "/products/colageno.png", link: "https://www.instagram.com/darfarmaoficial/p/DItzQ9NpxLA/", label: "Colágeno Hidrolizado" },
-    { image: "/products/Creatina-Monohidratada.png", link: "https://www.instagram.com/darfarmaoficial/p/DJXXsTMTnmH/", label: "Creatina Monohidratada" },
-    { image: "/products/Colágeno Hidrolizado + Glucosamina.png", link: "https://www.instagram.com/darfarmaoficial/p/DAZXuLqz840/", label: "Colágeno + Glucosamina" },
+    { image: "/instagram/post-1.png", link: "https://www.instagram.com/darfarmaoficial/", label: "Citrato de Magnesio" },
+    { image: "/instagram/post-2.png", link: "https://www.instagram.com/darfarmaoficial/", label: "Omega 3" },
+    { image: "/instagram/post-3.png", link: "https://www.instagram.com/darfarmaoficial/", label: "Equilibrio Natural" },
+    { image: "/instagram/post-4.png", link: "https://www.instagram.com/darfarmaoficial/", label: "Tu cuerpo te lo agradecerá" },
+    { image: "/instagram/post-5.png", link: "https://www.instagram.com/darfarmaoficial/", label: "Bienestar Natural" },
+    { image: "/instagram/post-6.png", link: "https://www.instagram.com/darfarmaoficial/", label: "Recupera tu equilibrio" },
 ]
 
 const containerVariants = {
@@ -98,7 +98,7 @@ export function SocialSection() {
                                 src={post.image}
                                 alt={`Dar Farma - ${post.label}`}
                                 fill
-                                className="object-contain p-4 grayscale group-hover:grayscale-0 transition-all duration-500"
+                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                                 loading="lazy"
                             />
